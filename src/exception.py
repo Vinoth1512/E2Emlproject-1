@@ -1,5 +1,9 @@
 import sys
-import logging
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  ## adds the parent directory of the current file to the Python system path
+
+from src.logger import logging
 
 '''  THIS FILE IS MAINLY FOR ERROR HANDLING '''
 
@@ -21,11 +25,13 @@ class CustomException(Exception):
     def __str__(self):
         return self.error_message
 
-''' FOR CHECKING PURPOSE
+''' FOR CHECKING PURPOSE '''
+
 if __name__=="__main__":
     try:
         a=1/0
     except Exception as e:
-        logger.logging.info("Zero Division Error")
+        logging.info("Zero Division Error")
         raise CustomException(e,sys)
-'''
+
+

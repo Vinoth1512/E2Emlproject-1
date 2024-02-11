@@ -5,6 +5,8 @@ matplotlib
 scikit-learn
 catboost
 xgboost
+dill       ## library help us to create pickle file
+
 
 
 ##-e .  #it will automatically triggers setup.py

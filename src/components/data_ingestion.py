@@ -1,11 +1,16 @@
 import os
 import sys     ## OS and sys is imported because we are using custom exception
-from src.exception import CustomException 
-from src.logger import logging
-import pandas as pd
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) ## adds the parent directory of the current file to the Python system path 
+
+from exception import CustomException 
+from logger import logging
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
 
 ''' THIS FILE MAINLY FOR DATA INGESTION (Reading the input raw data and splitting the data into train and test)'''
 
@@ -23,7 +28,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method or component")
         try:
-            df = pd.read_csv('notebook\data\stud.csv')
+            df = pd.read_csv('C:\\Users\\vinot\\Downloads\\Vinoth\\Python\\Krish Naik\\End to End Project\\ML\\notebook\\data\\stud.csv')
             logging.info('Read the dataset as dataframe')
             
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
@@ -41,15 +46,19 @@ class DataIngestion:
 
             return(
                 self.ingestion_config.train_data_path,
-                self.ingestion_config.test_data_path,
+                self.ingestion_config.test_data_path
 
             )
         except Exception as e:
             raise CustomException(e,sys)
 
 
-    if __name__ == "__main__":
-        obj = DataIngestion()
-        obj.initiate_data_ingestion()
+if __name__ == "__main__":
+    obj = DataIngestion()
+    train_data,test_data = obj.initiate_data_ingestion()
+
+
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data,test_data)
      
  
